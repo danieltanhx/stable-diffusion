@@ -1,5 +1,6 @@
-import argparse, os, re
+import argparse, os, re,sys,safetensors
 import torch
+sys.path.append('.')
 import numpy as np
 from random import randint
 from omegaconf import OmegaConf
@@ -26,11 +27,11 @@ def chunk(it, size):
 
 def load_model_from_config(ckpt, verbose=False):
     print(f"Loading model from {ckpt}")
-    pl_sd = torch.load(ckpt, map_location="cpu")
+    pl_sd = safetensors.torch.load_file(ckpt, device="cpu")
+    #print(pl_sd)
     if "global_step" in pl_sd:
         print(f"Global Step: {pl_sd['global_step']}")
-    sd = pl_sd["state_dict"]
-    return sd
+    return pl_sd
 
 
 config = "optimizedSD/v1-inference.yaml"
