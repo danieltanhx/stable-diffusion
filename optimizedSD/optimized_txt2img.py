@@ -169,7 +169,7 @@ parser.add_argument(
     default="plms",
 )
 parser.add_argument(
-    "--ckpt",
+    "--safetensors",
     type=str,
     help="path to checkpoint of model",
     default=DEFAULT_CKPT,
@@ -188,7 +188,7 @@ seed_everything(opt.seed)
 # Logging
 logger(vars(opt), log_csv = "logs/txt2img_logs.csv")
 
-sd = load_model_from_config(f"{opt.ckpt}")
+sd = load_model_from_config(f"{opt.safetensors}")
 li, lo = [], []
 for key, value in sd.items():
     sp = key.split(".")
